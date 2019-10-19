@@ -2,7 +2,7 @@
     <tab name="tab1">
         <row name="input">
             <dyn name="pid" dynname="pid">
-                <var name="Kp" varname="Kp" code="010103" type="f"/>
+                <var name="Kp" varname="Kp" code="010103" type="f" min="0" max="1"/>
                 <var name="Ki" varname="Ki" code="010101" type="f"/>
                 <var name="Kd" varname="Kd" code="010102" type="f"/>
                 <var name="Kp_scale" varname="Kp_scale" code="010109" type="f"/>

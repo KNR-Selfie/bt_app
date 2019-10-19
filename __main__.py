@@ -106,6 +106,10 @@ class SelfieApplication(QApplication):
                                     varName = QLabel(var.get('name'))
                                     varButton = QPushButton('send')
                                     varSlider = QSlider(Qt.Horizontal)
+                                    
+                                    if var.get('max'): varSlider.setMaximum(float(var.get('max'))*100)
+                                    if var.get('min'): varSlider.setMinimum(float(var.get('min'))*100)
+                                    if var.get('min') and var.get('max'): varSlider.setTickInterval(float(var.get('max'))-float(var.get('min')))
                                     textField = QLineEdit()
                                     varWLayout.addWidget(varName)
                                     varWLayout.addWidget(varButton)
@@ -123,6 +127,7 @@ class SelfieApplication(QApplication):
                                     self.targetFromCode[cd] = varName
                                     self.textFieldFromCode[cd] = textField
                                     self.sliders[varSlider] = cd
+                                    self.msgTypes[cd] = var.get('type')
                                 groupWLayout.addWidget(dynW)
                             elif panel.tag == 'sens':
                                 varW = QWidget()
@@ -179,8 +184,8 @@ class SelfieApplication(QApplication):
 
         def sliderSlot(self,val):
             code = self.sliders[self.sender()]
-            self.textFieldFromCode[code].setText(str(val))
-            self.valueChanged.emit(code,val)
+            self.textFieldFromCode[code].setText(str(val/100.))
+            self.valueChanged.emit(code,val/100.)
         def connectWidgets(self):
             for button in self.codeFromSource.keys():
                 button.clicked.connect(self.changeValueSlot)
